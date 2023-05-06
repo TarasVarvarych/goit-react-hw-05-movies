@@ -10,12 +10,16 @@ const API_KEY = '90c7ff0c6a89140d8ec65b5296dfcca2';
 function Movies() {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  // useEffect(() => {
-  //   axios(
-  //     `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${searchParams}`
-  //   ).then(movies => setMovies(movies.data.results));
-  //   setSearchParams({ query: searchParams });
-  // }, [searchParams, setSearchParams]);
+
+  useEffect(() => {
+    const query = searchParams.get('query');
+    if (query === null) {
+      return;
+    }
+    axios(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}`
+    ).then(movies => setMovies(movies.data.results));
+  }, [searchParams]);
 
   const hangleSubmit = e => {
     const { searchQuery } = e.currentTarget;
@@ -23,10 +27,8 @@ function Movies() {
     if (searchQuery.value.trim() === '') {
       return;
     }
-    axios(
-      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery.value}`
-    ).then(movies => setMovies(movies.data.results));
     setSearchParams({ query: searchQuery.value });
+    e.currentTarget.reset();
   };
   return (
     <>

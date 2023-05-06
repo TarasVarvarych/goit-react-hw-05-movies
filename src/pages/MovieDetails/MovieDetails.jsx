@@ -1,5 +1,4 @@
-// import { useLocation, Link } from 'react-router-dom';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -11,7 +10,7 @@ const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 function MovieDetails() {
   const [movie, setMovie] = useState([]);
   const { movieId } = useParams();
-
+  const location = useLocation();
   const {
     title,
     release_date,
@@ -43,6 +42,9 @@ function MovieDetails() {
 
   return (
     <MovieWrapper>
+      <Link to={location?.state?.from}>
+        <button type="button">Go back</button>
+      </Link>
       <img src="" alt="" />
       <h2>
         <img src={IMG_URL + poster_path} alt={tags} width="400" height="500" />

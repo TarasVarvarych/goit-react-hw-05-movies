@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 
 function Gallery({ movies }) {
+  const location = useLocation();
   return (
     <GalleryList>
       {movies.map(({ id, poster_path, tags }) => (
         <GalleryItem key={id}>
-          <Link to={`/movies/${id}`}>
+          <Link to={`/movies/${id}`} state={{ from: location }}>
             <img
               src={IMG_URL + poster_path}
               alt={tags}
