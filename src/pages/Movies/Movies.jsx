@@ -4,24 +4,20 @@ import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Gallery from 'components/Gallery/Gallery';
 import IconMovieSearchOutline from './SearchIcon';
+import LoadMoreBtn from 'components/LoadMoreBtn/LoadMoreBtn';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '90c7ff0c6a89140d8ec65b5296dfcca2';
 function Movies() {
   const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query');
+  const ShouldLoadMoreBtnShow = movies.length > 0;
 
-  useEffect(() => {
-    const query = searchParams.get('query');
-    if (query === null) {
-      return;
-    }
-    axios(
-      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}`
-    )
-      .then(movies => setMovies(movies.data.results))
-      .catch(console.log);
-  }, [searchParams]);
+  const handleLoadMoreBtn = () => {
+    setPage(prevPage => prevPage + 1);
+  };
 
   const hangleSubmit = e => {
     const { searchQuery } = e.currentTarget;
@@ -30,8 +26,34 @@ function Movies() {
       return;
     }
     setSearchParams({ query: searchQuery.value });
+    setPage(1);
     e.currentTarget.reset();
   };
+
+  useEffect(() => {
+    if (query === null) {
+      return;
+    }
+    axios(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}`
+    )
+      .then(movies => setMovies(movies.data.results))
+      .catch(console.log);
+  }, [query]);
+
+  useEffect(() => {
+    if (query === null) {
+      return;
+    }
+    axios(
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}&page=${page}`
+    )
+      .then(movies =>
+        setMovies(prevMovies => [...prevMovies, ...movies.data.results])
+      )
+      .catch(console.log);
+  }, [page, query]);
+
   return (
     <>
       <SearchForm onSubmit={hangleSubmit}>
@@ -45,6 +67,7 @@ function Movies() {
         </SearchFormWrapper>
       </SearchForm>
       <Gallery movies={movies} query={searchParams.get('query')} />
+      {ShouldLoadMoreBtnShow && <LoadMoreBtn onClick={handleLoadMoreBtn} />}
     </>
   );
 }
