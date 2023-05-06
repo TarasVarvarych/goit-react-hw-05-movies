@@ -14,9 +14,9 @@ function SharedLayout() {
           </li>
         </Navigation>
       </Header>
-      <main>
+      <Main>
         <Outlet />
-      </main>
+      </Main>
     </Container>
   );
 }
@@ -50,10 +50,10 @@ const NavigationLink = styled(NavLink)`
   font-size: 24px;
   text-decoration: none;
   &.active {
-    color: red;
+    color: #8db48e;
   }
   &:hover {
-    color: orange;
+    color: #4d724d;
   }
 `;
 
@@ -63,5 +63,10 @@ const Header = styled.header`
   @media screen and (min-width: 768px) {
     padding-top: 32px;
   }
+  border-bottom: 1px solid #bababa;
+`;
+
+const Main = styled.main`
+  padding-top: 20px;
 `;
 export default SharedLayout;

@@ -6,6 +6,8 @@ import axios from 'axios';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '90c7ff0c6a89140d8ec65b5296dfcca2';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
+const DEFAULT_POSTER_URL =
+  'https://motivatevalmorgan.com/wp-content/uploads/2016/06/default-movie.jpg';
 
 function MovieDetails() {
   const [movie, setMovie] = useState([]);
@@ -46,9 +48,13 @@ function MovieDetails() {
       <Link to={location?.state?.from ?? `/movies/${movieId}`}>
         <button type="button">Go back</button>
       </Link>
-      <img src="" alt="" />
+      <Poster
+        src={poster_path ? IMG_URL + poster_path : DEFAULT_POSTER_URL}
+        alt={tags}
+        width="400"
+        height="500"
+      />
       <h2>
-        <img src={IMG_URL + poster_path} alt={tags} width="400" height="500" />
         {title} ({dateToShow})
       </h2>
       <p>User score: {userScore}%</p>
@@ -98,5 +104,18 @@ const AditionalOptionsList = styled.ul`
 const AditionalOptionsTitle = styled.p`
   margin-top: 40px;
   font-size: 20px;
+`;
+
+const Poster = styled.img`
+  overflow: hidden;
+  border-radius: 5px;
+  height: 402px;
+  @media screen and (min-width: 768px) {
+    height: 455px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    height: 574px;
+  }
 `;
 export default MovieDetails;

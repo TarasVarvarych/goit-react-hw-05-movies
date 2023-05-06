@@ -51,7 +51,7 @@ const MovieTitle = styled.p`
 const GalleryItem = styled.li`
   width: 100%;
   border-radius: 5px;
-  background-color: #f3f3f3;
+  background-color: #8db48e;
   padding: 5px;
 
   @media screen and (min-width: 768px) {
@@ -66,6 +66,7 @@ const GalleryItem = styled.li`
     -webkit-box-shadow: 3px 6px 5px 0px rgba(159, 168, 163, 1);
     -moz-box-shadow: 3px 6px 5px 0px rgba(159, 168, 163, 1);
     box-shadow: 3px 6px 5px 0px rgba(159, 168, 163, 1);
+    background-color: #4d724d;
     scale: 1.02;
     cursor: pointer;
   }
