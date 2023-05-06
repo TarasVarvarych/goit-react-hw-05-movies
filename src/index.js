@@ -7,7 +7,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/tarasvarvarych.github.io/goit-react-hw-05-movies/">
       <App />
     </BrowserRouter>
   </React.StrictMode>

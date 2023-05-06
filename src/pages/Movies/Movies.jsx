@@ -36,7 +36,7 @@ function Movies() {
         <input name="searchQuery" type="text" />
         <button type="submit">Search</button>
       </form>
-      <Gallery movies={movies} />
+      <Gallery movies={movies} query={searchParams.get('query')} />
     </>
   );
 }

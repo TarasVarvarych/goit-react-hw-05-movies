@@ -42,7 +42,7 @@ function MovieDetails() {
 
   return (
     <MovieWrapper>
-      <Link to={location?.state?.from}>
+      <Link to={location?.state?.from ?? `/movies/${movieId}`}>
         <button type="button">Go back</button>
       </Link>
       <img src="" alt="" />
@@ -55,15 +55,15 @@ function MovieDetails() {
       <p>{overview}</p>
       <h3>Genres</h3>
       <p>{genresToShow(genres)}</p>
-      <p>Aditional information</p>
-      <ul>
+      <AditionalOptionsTitle>Aditional information:</AditionalOptionsTitle>
+      <AditionalOptionsList>
         <li>
-          <Link to={`cast`}>Cast</Link>
+          <AditionalLink to={`cast`}>Cast</AditionalLink>
         </li>
         <li>
-          <Link to={`reviews`}>Reviews</Link>
+          <AditionalLink to={`reviews`}>Reviews</AditionalLink>
         </li>
-      </ul>
+      </AditionalOptionsList>
       <Outlet />
     </MovieWrapper>
   );
@@ -72,5 +72,26 @@ function MovieDetails() {
 const MovieWrapper = styled.div`
   width: 400px;
   text-align: center;
+`;
+
+const AditionalLink = styled(Link)`
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: underline;
+  &: hover {
+    font-size: 22px;
+  }
+`;
+
+const AditionalOptionsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 10px;
+`;
+
+const AditionalOptionsTitle = styled.p`
+  margin-top: 40px;
+  font-size: 20px;
 `;
 export default MovieDetails;
