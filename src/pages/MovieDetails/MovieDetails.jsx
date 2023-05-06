@@ -1,9 +1,9 @@
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import styled from 'styled-components';
 import IconArrowLeft from './ArrowIcon';
-
 import axios from 'axios';
+import { Loader } from 'components/Loader/Loader';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '90c7ff0c6a89140d8ec65b5296dfcca2';
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
@@ -76,7 +76,9 @@ function MovieDetails() {
           </AditionalLink>
         </li>
       </AditionalOptionsList>
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </MovieWrapper>
   );
 }
