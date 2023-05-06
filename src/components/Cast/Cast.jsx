@@ -48,7 +48,7 @@ const CastCard = styled.li`
   padding: 5px;
 
   border-radius: 5px;
-  background-color: #f3f3f3;
+  background-color: #fff;
   &:hover {
     scale: 1.01;
   }
