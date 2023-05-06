@@ -11,6 +11,7 @@ function MovieDetails() {
   const [movie, setMovie] = useState([]);
   const { movieId } = useParams();
   const location = useLocation();
+  const prevLocation = location.state?.from;
   const {
     title,
     release_date,
@@ -58,10 +59,14 @@ function MovieDetails() {
       <AditionalOptionsTitle>Aditional information:</AditionalOptionsTitle>
       <AditionalOptionsList>
         <li>
-          <AditionalLink to={`cast`}>Cast</AditionalLink>
+          <AditionalLink to={`cast`} state={{ from: prevLocation }}>
+            Cast
+          </AditionalLink>
         </li>
         <li>
-          <AditionalLink to={`reviews`}>Reviews</AditionalLink>
+          <AditionalLink to={`reviews`} state={{ from: prevLocation }}>
+            Reviews
+          </AditionalLink>
         </li>
       </AditionalOptionsList>
       <Outlet />
