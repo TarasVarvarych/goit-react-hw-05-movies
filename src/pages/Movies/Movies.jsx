@@ -35,17 +35,6 @@ function Movies() {
       return;
     }
     axios(
-      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}`
-    )
-      .then(movies => setMovies(movies.data.results))
-      .catch(console.log);
-  }, [query]);
-
-  useEffect(() => {
-    if (query === null) {
-      return;
-    }
-    axios(
       `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}&page=${page}`
     )
       .then(movies =>
