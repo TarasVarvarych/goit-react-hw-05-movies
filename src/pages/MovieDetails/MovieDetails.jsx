@@ -1,6 +1,7 @@
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import IconArrowLeft from './ArrowIcon';
 
 import axios from 'axios';
 const BASE_URL = 'https://api.themoviedb.org/3/';
@@ -45,9 +46,9 @@ function MovieDetails() {
 
   return (
     <MovieWrapper>
-      <Link to={location?.state?.from ?? `/movies/${movieId}`}>
-        <button type="button">Go back</button>
-      </Link>
+      <GoBackLink to={location?.state?.from ?? `/movies/${movieId}`}>
+        <GoBackBtn type="button">{<IconArrowLeft />}Go back</GoBackBtn>
+      </GoBackLink>
       <Poster
         src={poster_path ? IMG_URL + poster_path : DEFAULT_POSTER_URL}
         alt={tags}
@@ -110,6 +111,7 @@ const Poster = styled.img`
   overflow: hidden;
   border-radius: 5px;
   height: 402px;
+  margin-bottom: 20px;
   @media screen and (min-width: 768px) {
     height: 455px;
   }
@@ -117,5 +119,26 @@ const Poster = styled.img`
   @media screen and (min-width: 1280px) {
     height: 574px;
   }
+`;
+const GoBackBtn = styled.button`
+  width: 160px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #8db48e;
+  border: none;
+  border-radius: 5px;
+  &:hover {
+    background-color: #4d724d;
+    scale: 1.02;
+    cursor: pointer;
+  }
+`;
+
+const GoBackLink = styled(Link)`
+  margin-bottom: 20px;
 `;
 export default MovieDetails;

@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { nanoid } from 'nanoid';
+import PropTypes from 'prop-types';
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -29,6 +30,10 @@ function Gallery({ movies }) {
   );
 }
 export default Gallery;
+
+Gallery.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.exact),
+};
 
 const Poster = styled.img`
   overflow: hidden;
