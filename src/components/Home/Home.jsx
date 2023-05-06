@@ -9,7 +9,7 @@ function Home() {
 
   useEffect(() => {
     axios(`${BASE_URL}trending/all/day?api_key=${API_KEY}`).then(movies =>
-      setMovies(movies.data.results)
+      setMovies(movies.data.results).catch(console.log)
     );
   }, []);
   return <Gallery movies={movies} />;

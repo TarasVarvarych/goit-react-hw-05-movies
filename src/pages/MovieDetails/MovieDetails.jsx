@@ -40,7 +40,7 @@ function MovieDetails() {
 
   useEffect(() => {
     axios(`${BASE_URL}movie/${movieId}?api_key=${API_KEY}`).then(movie =>
-      setMovie(movie.data)
+      setMovie(movie.data).catch(console.log)
     );
   }, [movieId]);
 

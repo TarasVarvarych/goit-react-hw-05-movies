@@ -18,7 +18,9 @@ function Movies() {
     }
     axios(
       `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}`
-    ).then(movies => setMovies(movies.data.results));
+    )
+      .then(movies => setMovies(movies.data.results))
+      .catch(console.log);
   }, [searchParams]);
 
   const hangleSubmit = e => {
