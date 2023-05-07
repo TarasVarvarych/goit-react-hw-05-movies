@@ -15,7 +15,7 @@ function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
   const ShouldLoadMoreBtnShow = Math.ceil(totalSearchResults / 20) > page;
 
-  let query = searchParams.get('query');
+  let query = searchParams.get('query') ?? '';
   const handleLoadMoreBtn = () => {
     setPage(prevPage => prevPage + 1);
   };
