@@ -8,13 +8,19 @@ const API_KEY = '90c7ff0c6a89140d8ec65b5296dfcca2';
 function Home() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalSearchResults, setTotalSearchResults] = useState(0);
+  const ShouldLoadMoreBtnShow = Math.ceil(totalSearchResults / 20) > page;
+
   const handleLoadMoreBtn = () => {
     setPage(prevPage => prevPage + 1);
   };
 
   useEffect(() => {
     axios(`${BASE_URL}trending/all/day?api_key=${API_KEY}`)
-      .then(movies => setMovies(movies.data.results))
+      .then(movies => {
+        setMovies(movies.data.results);
+        setTotalSearchResults(movies.data.total_results);
+      })
       .catch(console.log);
   }, []);
 
@@ -29,7 +35,7 @@ function Home() {
   return (
     <>
       <Gallery movies={movies} />
-      <LoadMoreBtn onClick={handleLoadMoreBtn} />
+      {ShouldLoadMoreBtnShow && <LoadMoreBtn onClick={handleLoadMoreBtn} />}
     </>
   );
 }

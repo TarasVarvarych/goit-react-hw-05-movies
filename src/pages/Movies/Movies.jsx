@@ -11,10 +11,11 @@ const API_KEY = '90c7ff0c6a89140d8ec65b5296dfcca2';
 function Movies() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalSearchResults, setTotalSearchResults] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query');
-  const ShouldLoadMoreBtnShow = movies.length > 0;
+  const ShouldLoadMoreBtnShow = Math.ceil(totalSearchResults / 20) > page;
 
+  let query = searchParams.get('query');
   const handleLoadMoreBtn = () => {
     setPage(prevPage => prevPage + 1);
   };
@@ -31,17 +32,23 @@ function Movies() {
   };
 
   useEffect(() => {
-    if (query === null) {
+    if (!query) {
+      setMovies([]);
       return;
     }
     axios(
-      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${query}&page=${page}`
+      `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&page=${page}&include_adult=false&query=${query}`
     )
-      .then(movies =>
-        setMovies(prevMovies => [...prevMovies, ...movies.data.results])
-      )
+      .then(movies => {
+        setTotalSearchResults(movies.data.total_results);
+        if (page === 1) {
+          setMovies(movies.data.results);
+        } else {
+          setMovies(prevMovies => [...prevMovies, ...movies.data.results]);
+        }
+      })
       .catch(console.log);
-  }, [page, query]);
+  }, [query, page]);
 
   return (
     <>
@@ -55,7 +62,7 @@ function Movies() {
           <SubmitBtn type="submit"> {<IconMovieSearchOutline />}</SubmitBtn>
         </SearchFormWrapper>
       </SearchForm>
-      <Gallery movies={movies} query={searchParams.get('query')} />
+      {query && <Gallery movies={movies} query={query} />}
       {ShouldLoadMoreBtnShow && <LoadMoreBtn onClick={handleLoadMoreBtn} />}
     </>
   );
