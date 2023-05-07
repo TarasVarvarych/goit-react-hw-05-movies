@@ -46,7 +46,7 @@ function MovieDetails() {
 
   return (
     <MovieWrapper>
-      <GoBackLink to={location?.state?.from ?? `/movies/${movieId}`}>
+      <GoBackLink to={prevLocation ?? `/movies/${movieId}`}>
         <GoBackBtn type="button">{<IconArrowLeft />}Go back</GoBackBtn>
       </GoBackLink>
       <Poster
