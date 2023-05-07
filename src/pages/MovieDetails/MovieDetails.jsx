@@ -1,5 +1,5 @@
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, useRef } from 'react';
 import styled from 'styled-components';
 import IconArrowLeft from './ArrowIcon';
 import axios from 'axios';
@@ -14,7 +14,7 @@ function MovieDetails() {
   const [movie, setMovie] = useState([]);
   const { movieId } = useParams();
   const location = useLocation();
-  const prevLocation = location.state?.from;
+  const prevLocation = useRef(location.state?.from ?? `/movies/${movieId}`);
   const {
     title,
     release_date,
@@ -46,7 +46,7 @@ function MovieDetails() {
 
   return (
     <MovieWrapper>
-      <GoBackLink to={prevLocation ?? `/movies/${movieId}`}>
+      <GoBackLink to={prevLocation.current}>
         <GoBackBtn type="button">{<IconArrowLeft />}Go back</GoBackBtn>
       </GoBackLink>
       <Poster
@@ -66,12 +66,12 @@ function MovieDetails() {
       <AditionalOptionsTitle>Aditional information:</AditionalOptionsTitle>
       <AditionalOptionsList>
         <li>
-          <AditionalLink to={`cast`} state={{ from: prevLocation }}>
+          <AditionalLink to={`cast`} state={{ from: prevLocation.current }}>
             Cast
           </AditionalLink>
         </li>
         <li>
-          <AditionalLink to={`reviews`} state={{ from: prevLocation }}>
+          <AditionalLink to={`reviews`} state={{ from: prevLocation.current }}>
             Reviews
           </AditionalLink>
         </li>
