@@ -62,7 +62,7 @@ function Movies() {
           <SubmitBtn type="submit"> {<IconMovieSearchOutline />}</SubmitBtn>
         </SearchFormWrapper>
       </SearchForm>
-      {query && <Gallery movies={movies} query={query} />}
+      {query && <Gallery movies={movies} />}
       {ShouldLoadMoreBtnShow && <LoadMoreBtn onClick={handleLoadMoreBtn} />}
     </>
   );
